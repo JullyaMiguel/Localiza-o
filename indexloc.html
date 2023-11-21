@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotas Automatizadas</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css">
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    #map {
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([-23.5438, -46.3128], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© Contribuidores do OpenStreetMap'
+  }).addTo(map);
+
+  var routingControl = L.Routing.control({
+    waypoints: [
+      L.latLng(-23.5438, -46.3128),
+      L.latLng(-23.5444, -46.3089) // Coordenadas do Senai Suzano - substitua pelas coordenadas reais
+    ],
+    language: 'pt', // Adicionando a configuração de idioma para português
+    routeWhileDragging: true,
+    show: false,
+    geocoder: L.Control.Geocoder.nominatim(),
+    reverseWaypoints: true,
+    router: L.Routing.mapbox('Sua-chave-do-Mapbox'),
+    collapsible: true,
+    showAlternatives: true,
+    altLineOptions: {
+      styles: [
+        {color: 'black', opacity: 0.15, weight: 9},
+        {color: 'white', opacity: 0.8, weight: 6},
+        {color: 'blue', opacity: 0.5, weight: 2}
+      ]
+    }
+  }).addTo(map);
+
+  L.circle([-23.5444, -46.3089], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 1000 // Raio em metros, ajuste conforme necessário
+  }).addTo(map);
+</script>
+
+</body>
+</html>
